@@ -56,6 +56,12 @@
             float: left;
         }
         
+        .num_blank {
+            float: left;
+            width: 50px;
+            width: 55px;
+        }
+        
         .num_1 {
             height: 55px;
             width: 50px;
@@ -147,6 +153,7 @@
     <div class="change_num" style="height:500px;width:100%;position:absolute;background:rgba(255, 255, 255, 0.13);border-radius:50px;top:470px">
         <div class="user">
             <div class="user_text" style="height:250px;width:480px;background:url('./img/user.PNG')"></div>
+            <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -155,21 +162,43 @@
             <div class="num"></div>
             <div class="num"></div>
             <div class="num"></div>
-            <div class="num"></div>
-
-
         </div>
         <div class="game">
             <div class="game_text" style="height:250px;width:480px;background:url('./img/game_1.PNG')"></div>
+            <div class="num_blank"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
         </div>
         <div class="user_relation">
             <div class="user_relation_text" style="height:250px;width:480px;background:url('./img/user_net.PNG')"></div>
+            <div class="num_blank"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
         </div>
         <div class="commit">
             <div class="commit_text" style="height:250px;width:480px;background:url('./img/commit.PNG')"></div>
+            <div class="num_blank"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
         </div>
-
-
     </div>
     <div id="container">
 
@@ -190,11 +219,23 @@
             url: "http://47.100.12.100:5902/test/",
             async: true,
             success: function(data) {
-                var num = addPreZero(data);
-                console.log(num);
-                for (let i = 0; i < num.length; i++) {
-                    console.log(num[i]);
-                    $(".user .num").eq(i).addClass("num_" + num[i]);
+
+                var user_num = addPreZero(data[0]);
+                var game_num = addPreZero(data[1]);
+                var ul_num = addPreZero(data[2]);
+                var commit_num = addPreZero(data[3]);
+
+                for (let i = 0; i < user_num.length; i++) {
+                    $(".user .num").eq(i).addClass("num_" + user_num[i]);
+                }
+                for (let i = 0; i < user_num.length; i++) {
+                    $(".game .num").eq(i).addClass("num_" + game_num[i]);
+                }
+                for (let i = 0; i < user_num.length; i++) {
+                    $(".user_relation .num").eq(i).addClass("num_" + ul_num[i]);
+                }
+                for (let i = 0; i < user_num.length; i++) {
+                    $(".commit .num").eq(i).addClass("num_" + commit_num[i]);
                 }
 
             },
@@ -205,7 +246,7 @@
 
 
         function addPreZero(num) {
-            return ('000000000' + num).slice(-9);
+            return ('000000000' + num).slice(-8);
         }
 
 
