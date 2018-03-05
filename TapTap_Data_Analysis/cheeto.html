@@ -51,20 +51,126 @@
             left: 0;
             background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(250, 251, 253, 0.596))
         }
+        
+        .num {
+            float: left;
+        }
+        
+        .num_1 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px 0px
+        }
+        
+        .num_2 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -53px
+        }
+        
+        .num_3 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -107px
+        }
+        
+        .num_4 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -160px
+        }
+        
+        .num_5 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -213px
+        }
+        
+        .num_6 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -270px
+        }
+        
+        .num_7 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -320px
+        }
+        
+        .num_8 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -373px
+        }
+        
+        .num_9 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -427px
+        }
+        
+        .num_0 {
+            height: 55px;
+            width: 50px;
+            background: url('./img/num.PNG') no-repeat;
+            background-position: 0px -480px
+        }
+        
+        .change_num>div {
+            height: 100%;
+            width: 25%;
+            float: left
+        }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <div class="header_item" style="background:url('./about_us.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./social_net.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./system.PNG') no-repeat;background-position:center "></div>
-        <div class="header_item" style="background:url('./game.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./one.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./main_page.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./all.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item" style="background:url('./img/about_us.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item" style="background:url('./img/social_net.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item" style="background:url('./img/system.PNG') no-repeat;background-position:center "></div>
+        <div class="header_item" style="background:url('./img/game.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item" style="background:url('./img/one.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item" style="background:url('./img/main_page.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item" style="background:url('./img/all.PNG') no-repeat;background-position:center"></div>
     </div>
-    <div class="change_num" style="height:500px;width:100%;position:absolute;background:rgba(255, 255, 255, 0.13);border-radius:50px;top:150px"></div>
+    <div class="change_num" style="height:500px;width:100%;position:absolute;background:rgba(255, 255, 255, 0.13);border-radius:50px;top:470px">
+        <div class="user">
+            <div class="user_text" style="height:250px;width:480px;background:url('./img/user.PNG')"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+
+
+        </div>
+        <div class="game">
+            <div class="game_text" style="height:250px;width:480px;background:url('./img/game_1.PNG')"></div>
+        </div>
+        <div class="user_relation">
+            <div class="user_relation_text" style="height:250px;width:480px;background:url('./img/user_net.PNG')"></div>
+        </div>
+        <div class="commit">
+            <div class="commit_text" style="height:250px;width:480px;background:url('./img/commit.PNG')"></div>
+        </div>
+
+
+    </div>
     <div id="container">
 
     </div>
@@ -72,19 +178,24 @@
 
 
     <script src="https://cdn.bootcss.com/three.js/90/three.js"></script>
-
-    <script src="./FirstPersonControls.js"></script>
-
-    <script src="./ImprovedNoise.js"></script>
-    <script src="./Detector.js"></script>
+    <script src="./js/FirstPersonControls.js"></script>
+    <script src="./js/ImprovedNoise.js"></script>
+    <script src="./js/Detector.js"></script>
 
 
     <script>
+        var num = [];
         $.ajax({
             type: "get",
             url: "http://47.100.12.100:5902/test/",
             async: true,
             success: function(data) {
+                var num = addPreZero(data);
+                console.log(num);
+                for (let i = 0; i < num.length; i++) {
+                    console.log(num[i]);
+                    $(".user .num").eq(i).addClass("num_" + num[i]);
+                }
 
             },
             error: function(data) {
@@ -93,6 +204,9 @@
         });
 
 
+        function addPreZero(num) {
+            return ('000000000' + num).slice(-9);
+        }
 
 
 
