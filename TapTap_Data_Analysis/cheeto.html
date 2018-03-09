@@ -4,8 +4,9 @@
 <head>
     <title>CHEETO</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <script src="https://cdn.bootcss.com/jquery/1.8.0/jquery-1.8.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             color: #61443e;
@@ -21,7 +22,7 @@
         #info {
             position: absolute;
             top: 0px;
-            width: 100%;
+            
             padding: 5px;
         }
         
@@ -31,21 +32,19 @@
         
         .header_item {
             height: 150px;
-            width: 160px;
+            
             float: right;
             color: #fff;
             font-size: 20px;
             line-height: 135px;
-            margin-right: 35px;
+
         }
         
-        .header :first-child {
-            margin-right: 100px;
-        }
+
         
         .header {
             height: 135px;
-            width: 100%;
+            
             position: absolute;
             top: 0;
             left: 0;
@@ -134,25 +133,28 @@
         
         .change_num>div {
             height: 100%;
-            width: 25%;
             float: left
+        }
+        .num{
+            width:36px;
+            
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <div class="header_item" style="background:url('./img/about_us.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./img/social_net.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./img/system.PNG') no-repeat;background-position:center "></div>
-        <div class="header_item" style="background:url('./img/game.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./img/one.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./img/main_page.PNG') no-repeat;background-position:center"></div>
-        <div class="header_item" style="background:url('./img/all.PNG') no-repeat;background-position:center"></div>
+    <div class="header col-md-12">
+        <div class="header_item col-md-2" style="background:url('./img/about_us.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item col-md-2" style="background:url('./img/social_net.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item col-md-2" style="background:url('./img/system.PNG') no-repeat;background-position:center "></div>
+        <div class="header_item col-md-2" style="background:url('./img/game.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item col-md-2" style="background:url('./img/one.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item col-md-1" style="background:url('./img/main_page.PNG') no-repeat;background-position:center"></div>
+        <div class="header_item col-md-1" style="background:url('./img/all.PNG') no-repeat;background-position:center"></div>
     </div>
-    <div class="change_num" style="height:500px;width:100%;position:absolute;background:rgba(255, 255, 255, 0.13);border-radius:50px;top:470px">
-        <div class="user">
-            <div class="user_text" style="height:250px;width:480px;background:url('./img/user.PNG')"></div>
+    <div class="change_num " style="height:500px;width:100%;position:absolute;background:rgba(255, 255, 255, 0.13);border-radius:50px;top:470px">
+        <div class="user col-md-3">
+            <div class="user_text" style="background-size:contain;width:100%;height:110px;background:url('./img/user.PNG') no-repeat;background-size:100%"></div>
             <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -163,8 +165,8 @@
             <div class="num"></div>
             <div class="num"></div>
         </div>
-        <div class="game">
-            <div class="game_text" style="height:250px;width:480px;background:url('./img/game_1.PNG')"></div>
+        <div class="game col-md-3">
+            <div class="game_text" style="background-size:contain;width:100%;height:110px;background:url('./img/game_1.PNG') no-repeat;background-size:100%"></div>
             <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -175,8 +177,8 @@
             <div class="num"></div>
             <div class="num"></div>
         </div>
-        <div class="user_relation">
-            <div class="user_relation_text" style="height:250px;width:480px;background:url('./img/user_net.PNG')"></div>
+        <div class="user_relation col-md-3">
+            <div class="user_relation_text" style="background-size:contain;width:100%;height:110px;background:url('./img/user_net.PNG') no-repeat;background-size:100%"></div>
             <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -187,8 +189,8 @@
             <div class="num"></div>
             <div class="num"></div>
         </div>
-        <div class="commit">
-            <div class="commit_text" style="height:250px;width:480px;background:url('./img/commit.PNG')"></div>
+        <div class="commit col-md-3">
+            <div class="commit_text" style="background-size:contain;width:100%;height:110px;background:url('./img/commit.PNG') no-repeat;background-size:100%"></div>
             <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -340,7 +342,7 @@
             }
             var geometry = new THREE.BufferGeometry().fromGeometry(tmpGeometry);
             geometry.computeBoundingSphere();
-            var texture = new THREE.TextureLoader().load('http://47.100.12.100:5902/static/image/ground.jpeg');
+            var texture = new THREE.TextureLoader().load('../img/atlas.png');
             texture.magFilter = THREE.NearestFilter;
             texture.minFilter = THREE.LinearMipMapLinearFilter;
             var mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({
