@@ -31,7 +31,7 @@
         }
         
         .header_item {
-            height: 150px;
+            height: 100px;
             
             float: right;
             color: #fff;
@@ -43,8 +43,7 @@
 
         
         .header {
-            height: 135px;
-            
+            height: 100px;
             position: absolute;
             top: 0;
             left: 0;
@@ -62,6 +61,7 @@
         }
         
         .num_1 {
+            animation:num_1 ease-in-out 2s;
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
@@ -137,8 +137,9 @@
         }
         .num{
             width:36px;
-            
+            transition: all 2s ease;
         }
+        
     </style>
 </head>
 
@@ -152,9 +153,9 @@
         <div class="header_item col-md-1" style="background:url('./img/main_page.PNG') no-repeat;background-position:center"></div>
         <div class="header_item col-md-1" style="background:url('./img/all.PNG') no-repeat;background-position:center"></div>
     </div>
-    <div class="change_num " style="height:500px;width:100%;position:absolute;background:rgba(255, 255, 255, 0.13);border-radius:50px;top:470px">
+    <div class="change_num " style="height:500px;width:100%;position:absolute;top:600px">
         <div class="user col-md-3">
-            <div class="user_text" style="background-size:contain;width:100%;height:110px;background:url('./img/user.PNG') no-repeat;background-size:100%"></div>
+            <div class="user_text" style="background-size:contain;width:100%;height:110px;background:url('./img/user.PNG') no-repeat;background-size:90%"></div>
             <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -166,7 +167,7 @@
             <div class="num"></div>
         </div>
         <div class="game col-md-3">
-            <div class="game_text" style="background-size:contain;width:100%;height:110px;background:url('./img/game_1.PNG') no-repeat;background-size:100%"></div>
+            <div class="game_text" style="background-size:contain;width:100%;height:110px;background:url('./img/game_1.PNG') no-repeat;background-size:90%"></div>
             <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -178,7 +179,7 @@
             <div class="num"></div>
         </div>
         <div class="user_relation col-md-3">
-            <div class="user_relation_text" style="background-size:contain;width:100%;height:110px;background:url('./img/user_net.PNG') no-repeat;background-size:100%"></div>
+            <div class="user_relation_text" style="background-size:contain;width:100%;height:110px;background:url('./img/user_net.PNG') no-repeat;background-size:90%"></div>
             <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -190,7 +191,7 @@
             <div class="num"></div>
         </div>
         <div class="commit col-md-3">
-            <div class="commit_text" style="background-size:contain;width:100%;height:110px;background:url('./img/commit.PNG') no-repeat;background-size:100%"></div>
+            <div class="commit_text" style="background-size:contain;width:100%;height:110px;background:url('./img/commit.PNG') no-repeat;background-size:90%"></div>
             <div class="num_blank"></div>
             <div class="num"></div>
             <div class="num"></div>
@@ -218,7 +219,7 @@
         var num = [];
         $.ajax({
             type: "get",
-            url: "http://47.100.12.100:5902/test/",
+            url: "http://47.100.12.100/test/",
             async: true,
             success: function(data) {
 
@@ -342,7 +343,7 @@
             }
             var geometry = new THREE.BufferGeometry().fromGeometry(tmpGeometry);
             geometry.computeBoundingSphere();
-            var texture = new THREE.TextureLoader().load('../img/atlas.png');
+            var texture = new THREE.TextureLoader().load('http://47.100.12.100/static/image/atlas.png');
             texture.magFilter = THREE.NearestFilter;
             texture.minFilter = THREE.LinearMipMapLinearFilter;
             var mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({
