@@ -5,7 +5,8 @@
     <title>CHEETO</title>
     <meta charset="utf-8">
     <script src="https://cdn.bootcss.com/jquery/1.8.0/jquery-1.8.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -18,30 +19,30 @@
             -webkit-font-smoothing: antialiased;
             font: 12px/1.5 "Microsoft YaHei", 微软雅黑, arial, simsun, 宋体;
         }
-        
+
         #info {
             position: absolute;
             top: 0px;
-            
+
             padding: 5px;
         }
-        
+
         a {
             color: #a06851;
         }
-        
+
         .header_item {
             height: 100px;
-            
+
             float: right;
             color: #fff;
             font-size: 20px;
             line-height: 135px;
 
         }
-        
 
-        
+
+
         .header {
             height: 100px;
             position: absolute;
@@ -49,97 +50,97 @@
             left: 0;
             background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(250, 251, 253, 0.596))
         }
-        
+
         .num {
             float: left;
         }
-        
+
         .num_blank {
             float: left;
             width: 50px;
             width: 55px;
         }
-        
+
         .num_1 {
-            animation:num_1 ease-in-out 2s;
+            animation: num_1 ease-in-out 2s;
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px 0px
         }
-        
+
         .num_2 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -53px
         }
-        
+
         .num_3 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -107px
         }
-        
+
         .num_4 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -160px
         }
-        
+
         .num_5 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -213px
         }
-        
+
         .num_6 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -270px
         }
-        
+
         .num_7 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -320px
         }
-        
+
         .num_8 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -373px
         }
-        
+
         .num_9 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -427px
         }
-        
+
         .num_0 {
             height: 55px;
             width: 50px;
             background: url('./img/num.PNG') no-repeat;
             background-position: 0px -480px
         }
-        
+
         .change_num>div {
             height: 100%;
             float: left
         }
-        .num{
-            width:36px;
+
+        .num {
+            width: 36px;
             transition: all 2s ease;
         }
-        
     </style>
 </head>
 
@@ -217,35 +218,38 @@
 
     <script>
         var num = [];
-        $.ajax({
-            type: "get",
-            url: "http://47.100.12.100/test/",
-            async: true,
-            success: function(data) {
+        var ajax_insert = function () {
+            $.ajax({
+                type: "get",
+                url: "http://47.100.12.100/test/",
+                async: true,
+                success: function (data) {
 
-                var user_num = addPreZero(data[0]);
-                var game_num = addPreZero(data[1]);
-                var ul_num = addPreZero(data[2]);
-                var commit_num = addPreZero(data[3]);
+                    var user_num = addPreZero(data[0]);
+                    var game_num = addPreZero(data[1]);
+                    var ul_num = addPreZero(data[2]);
+                    var commit_num = addPreZero(data[3]);
 
-                for (let i = 0; i < user_num.length; i++) {
-                    $(".user .num").eq(i).addClass("num_" + user_num[i]);
-                }
-                for (let i = 0; i < user_num.length; i++) {
-                    $(".game .num").eq(i).addClass("num_" + game_num[i]);
-                }
-                for (let i = 0; i < user_num.length; i++) {
-                    $(".user_relation .num").eq(i).addClass("num_" + ul_num[i]);
-                }
-                for (let i = 0; i < user_num.length; i++) {
-                    $(".commit .num").eq(i).addClass("num_" + commit_num[i]);
-                }
+                    for (let i = 0; i < user_num.length; i++) {
+                        $(".user .num").eq(i).addClass("num_" + user_num[i]);
+                    }
+                    for (let i = 0; i < user_num.length; i++) {
+                        $(".game .num").eq(i).addClass("num_" + game_num[i]);
+                    }
+                    for (let i = 0; i < user_num.length; i++) {
+                        $(".user_relation .num").eq(i).addClass("num_" + ul_num[i]);
+                    }
+                    for (let i = 0; i < user_num.length; i++) {
+                        $(".commit .num").eq(i).addClass("num_" + commit_num[i]);
+                    }
 
-            },
-            error: function(data) {
+                },
+                error: function (data) {
 
-            }
-        });
+                }
+            })
+        }
+        window.onload=setInterval(ajax_insert,100);
 
 
         function addPreZero(num) {
