@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/1.8.0/jquery-1.8.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.7/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="main" style="width: 1500px;height:1000px;"></div>
+    <script>
+        $.ajax({
+            type: "post",
+            url: "http://192.168.1.107:8000/user/",
+            async: true,
+            data: {
+                "user": "8708"
+            },
+            error:function(){
+                console.log("error")
+            },
+            success: function (res) {
+                console.log(res)
+                var myChart = echarts.init(document.getElementById('main'));
+                pic_list = ['user_good_pic', 'user_happy_pic', 'user_gamenum_pic', 'user_companynum_pic',
+                    'user_longtimenum_pic', 'user_funnum_pic', 'user_follownum_pic'
+                ]
+
+                data_index = {}
+                legendData = {}
+                for (var j = 0; j < pic_list.length; j++) {
+                    legendData_list = []
+                    for (var i = 0; i < res[pic_list[j]].length; i++) {
+                        aaa = res[pic_list[j]][i]
+                        if (!isNaN(res[pic_list[j]][i])) {
+                            legendData_list[i] = aaa;
+                        } else {
+                            legendData_list[i] = Number(aaa.split('-')[0]);
+                            if (pic_list[j] in data_index) {
+                                data_index[pic_list[j]].push(i);
+                            } else {
+                                data_index[pic_list[j]] = [];
+                                data_index[pic_list[j]].push(i);
+                            }
+                        }
+                    };
+                    legendData[pic_list[j]] = legendData_list
+                };
+                console.log(data_index)
+                option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: function (params) {
+                            relVal = ''
+                            for (var j = 0; j < params.length; j++) {
+                                if (params[j]['seriesName'] in data_index) {
+                                    if (data_index[params[j]['seriesName']].indexOf(params[j][
+                                            'dataIndex'
+                                        ]) != -1) {
+                                        relVal +=
+                                            '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' +
+                                            params[j].color + '"></span>'
+                                        relVal += params[j].seriesName + ' : ' + '未知';
+                                    } else {
+                                        relVal +=
+                                            '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' +
+                                            params[j].color + '"></span>'
+                                        relVal += params[j].seriesName + ' : ' + params[j].value;
+                                    }
+                                } else {
+                                    relVal +=
+                                        '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' +
+                                        params[j].color + '"></span>'
+                                    relVal += params[j].seriesName + ' : ' + params[j].value;
+                                }
+                            }
+                            return relVal
+                        }
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {
+                                show: true,
+                                readOnly: false
+                            },
+                            magicType: {
+                                show: true,
+                                type: ['line', 'bar']
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    grid: {
+                        width: 1000,
+                        right: '10%',
+                        containLabel: true
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        top: 'middle',
+                        itemGap: 20,
+                        right: 500,
+                        height: 400,
+                        data: pic_list
+                    },
+                    xAxis: [{
+                        type: 'category',
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        data: res['user_time']
+                    }],
+                    dataZoom: [{
+                        type: 'slider',
+                        xAxisIndex: 0,
+                        filterMode: 'empty',
+                        start: 0,
+                        end: 100
+                    }, {
+                        type: 'slider',
+                        yAxisIndex: 0,
+                        filterMode: 'empty',
+                        start: 0,
+                        end: 100
+                    }, {
+                        type: 'inside',
+                        xAxisIndex: 0,
+                        filterMode: 'empty',
+                        start: 0,
+                        end: 100
+                    }, {
+                        type: 'inside',
+                        yAxisIndex: 0,
+                        filterMode: 'empty',
+                        start: 0,
+                        end: 100
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        name: '时间',
+                        min: 0,
+                        position: 'left',
+                        axisLabel: {
+                            formatter: '{value} h'
+                        }
+                    }, {
+                        type: 'value',
+                        name: '个数',
+                        min: 0,
+                        position: 'right',
+                        axisLabel: {
+                            formatter: '{value} 个'
+                        }
+                    }],
+                    series: [{
+                            name: pic_list[0],
+                            type: 'bar',
+                            yAxisIndex: 1,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            data: legendData[pic_list[0]]
+                        }, {
+                            name: pic_list[1],
+                            type: 'bar',
+                            yAxisIndex: 1,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            data: legendData[pic_list[1]]
+                        },
+                        {
+                            name: pic_list[5],
+                            type: 'bar',
+                            yAxisIndex: 1,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            data: legendData[pic_list[5]]
+                        }, {
+                            name: pic_list[6],
+                            type: 'bar',
+                            yAxisIndex: 1,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top'
+                                }
+                            },
+                            data: legendData[pic_list[6]]
+                        },
+                        {
+                            name: pic_list[2],
+                            type: 'line',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top',
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3,
+                                    shadowColor: 'rgba(0,0,0,0.4)',
+                                    shadowBlur: 10,
+                                    shadowOffsetY: 10,
+
+                                }
+                            },
+                            data: legendData[pic_list[2]]
+                        },
+                        {
+                            name: pic_list[3],
+                            type: 'line',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top',
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3,
+                                    shadowColor: 'rgba(0,0,0,0.4)',
+                                    shadowBlur: 10,
+                                    shadowOffsetY: 10,
+
+                                }
+                            },
+                            data: legendData[pic_list[3]]
+                        },
+                        {
+                            name: pic_list[4],
+                            type: 'line',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'top',
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3,
+                                    shadowColor: 'rgba(0,0,0,0.4)',
+                                    shadowBlur: 10,
+                                    shadowOffsetY: 10,
+
+                                }
+                            },
+                            data: legendData[pic_list[4]]
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+                myChart.on('click', function (params) {
+                    if (params.componentType === 'series' && params.seriesType === 'bar') {
+                        var dataIndex1 = params.dataIndex;
+                        myChart.setOption({
+
+                            series: [{
+                                    name: pic_list[0],
+                                    type: 'bar',
+                                    yAxisIndex: 1,
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'top'
+                                        }
+                                    },
+                                    data: legendData[pic_list[0]]
+                                }, {
+                                    name: pic_list[1],
+                                    type: 'bar',
+                                    yAxisIndex: 1,
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'top'
+                                        }
+                                    },
+                                    data: legendData[pic_list[1]]
+                                },
+                                {
+                                    name: pic_list[5],
+                                    type: 'bar',
+                                    yAxisIndex: 1,
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'top'
+                                        }
+                                    },
+                                    data: legendData[pic_list[5]]
+                                }, {
+                                    name: pic_list[6],
+                                    type: 'bar',
+                                    yAxisIndex: 1,
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'top'
+                                        }
+                                    },
+                                    data: legendData[pic_list[6]]
+                                },
+                                {
+                                    name: pic_list[2],
+                                    type: 'line',
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'top',
+                                        }
+                                    },
+                                    lineStyle: {
+                                        normal: {
+                                            width: 3,
+                                            shadowColor: 'rgba(0,0,0,0.4)',
+                                            shadowBlur: 10,
+                                            shadowOffsetY: 10,
+
+                                        }
+                                    },
+                                    data: legendData[pic_list[2]]
+                                },
+                                {
+                                    name: pic_list[3],
+                                    type: 'line',
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'top',
+                                        }
+                                    },
+                                    lineStyle: {
+                                        normal: {
+                                            width: 3,
+                                            shadowColor: 'rgba(0,0,0,0.4)',
+                                            shadowBlur: 10,
+                                            shadowOffsetY: 10,
+
+                                        }
+                                    },
+                                    data: legendData[pic_list[3]]
+                                },
+                                {
+                                    name: pic_list[4],
+                                    type: 'line',
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'top',
+                                        }
+                                    },
+                                    lineStyle: {
+                                        normal: {
+                                            width: 3,
+                                            shadowColor: 'rgba(0,0,0,0.4)',
+                                            shadowBlur: 10,
+                                            shadowOffsetY: 10,
+
+                                        }
+                                    },
+                                    data: legendData[pic_list[4]]
+                                },
+                                {
+                                    type: 'pie',
+                                    radius: [0, '100'],
+                                    center: ['10%', '15%'],
+                                    data: [{
+                                            value: legendData[pic_list[0]],
+                                            name: '点赞数'
+
+                                        },
+                                        {
+                                            value: legendData[pic_list[1]],
+                                            name: '欢乐值'
+
+                                        }
+                                    ]
+                                }
+                            ]
+                        })
+                    }
+                });
+
+            }
+        });
+    </script>
+</body>
+
+</html>
